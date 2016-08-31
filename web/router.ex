@@ -13,6 +13,15 @@ defmodule PhoenixDemo.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", PhoenixDemo do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
+  end
+
   scope "/", PhoenixDemo do
     pipe_through :browser # Use the default browser stack
 
